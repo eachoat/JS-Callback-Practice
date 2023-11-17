@@ -2,10 +2,75 @@ const inventory = newInventory()
 move(inventory).to(0, 0)
 
 const character = newImage('assets/green-character/static.gif')
-move(character).to(100, 250)
+
+function handleDirectionChange(direction){
+    if(direction === null){
+        character.src = 'assets/green-character/static.gif'
+    }
+    if(direction === 'west'){
+        character.src = 'assets/green-character/west.gif'
+    }
+    if(direction === 'north'){
+        character.src = 'assets/green-character/north.gif'
+    }
+    if(direction === 'east'){
+        character.src = 'assets/green-character/east.gif'
+    }
+    if(direction === 'south'){
+        character.src = 'assets/green-character/south.gif'
+    }
+}
+
+move(character).withArrowKeys(100, 250, handleDirectionChange)
+
+
+
+function moveCharacter() {
+    setInterval(function () {
+       
+        if (direction === 'west') {
+            x -= 5 
+        } else if (direction === 'north') {
+            y -= 5
+        } else if (direction === 'east') {
+            x += 5 
+        } else if (direction === 'south') {
+            y += 5 
+        }
+
+        move(character).to(x, y)
+    }, 100)
+}
+
+document.addEventListener('keydown', function (e) {
+    if (e.repeat) return
+
+    if (e.key === 'ArrowLeft') {
+        direction = 'west'
+    } else if (e.key === 'ArrowUp') {
+        direction = 'north'
+    } else if (e.key === 'ArrowRight') {
+        direction = 'east'
+    } else if (e.key === 'ArrowDown') {
+        direction = 'south'
+    }
+});
+
+moveCharacter()
+document.addEventListener('keyup', function(e){
+    direction = null
+})
+
+    
+
+
+
+
+
 
 
 move(newImage('assets/tree.png')).to(200, 450)
+
 move(newImage('assets/pillar.png')).to(350, 250)
 move(newImage('assets/pine-tree.png')).to(450, 350)
 move(newImage('assets/crate.png')).to(150, 350)
